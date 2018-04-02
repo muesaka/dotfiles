@@ -68,6 +68,7 @@ fi
 if [ ! -f "$ENHANCD_DIR/enhancd.log" ]; then
   touch "$ENHANCD_DIR/enhancd.log"
 fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function fzf-history-selection() {
   local tac
@@ -84,3 +85,4 @@ function fzf-history-selection() {
 
 zle -N fzf-history-selection
 bindkey '^r' fzf-history-selection
+
