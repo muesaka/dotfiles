@@ -60,6 +60,7 @@ then
     eval "$(pyenv init -)"
 fi
 
+export ENHANCD_DIR=$HOME/.enhancd
 if [ ! -d "$ENHANCD_DIR" ]; then
   mkdir -p "$ENHANCD_DIR"
 fi
