@@ -45,7 +45,41 @@ bindkey -v
 
 autoload -U compinit; compinit -C
 
+autoload -Uz zmv
+alias zmv='noglob zmv -W'
+setopt auto_cd
 eval "$(fasd --init auto)"
 
 export GOPATH=$HOME
 path=(/usr/local/go/bin(N-/) /usr/local/bin(N-/) $path)
+
+if type pyenv >/dev/null 2>&1
+then
+    export PYENV_ROOT=$HOME/.pyenv
+    export PATH=$PYENV_ROOT/bin:$PATH
+    eval "$(pyenv init -)"
+fi
+
+if [ ! -d "$ENHANCD_DIR" ]; then
+  mkdir -p "$ENHANCD_DIR"
+fi
+
+if [ ! -f "$ENHANCD_DIR/enhancd.log" ]; then
+  touch "$ENHANCD_DIR/enhancd.log"
+fi
+
+function fzf-history-selection() {
+  local tac
+  if which tac > /dev/null; then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+  BUFFER=$(history -n 1 | eval $tac | fzf --query "$LBUFFER")
+  CURSOR=$#BUFFER
+
+  zle reset-prompt
+}
+
+zle -N fzf-history-selection
+bindkey '^r' fzf-history-selection
