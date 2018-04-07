@@ -83,6 +83,14 @@ function fzf-history-selection() {
   zle reset-prompt
 }
 
+function frepo() {
+  local dir
+  dir=$(ghq list > /dev/null | fzf-tmux --reverse +m) &&
+    cd $(ghq root)/$dir
+}
+
 zle -N fzf-history-selection
 bindkey '^r' fzf-history-selection
 
+zle -N frepo
+bindkey '^]' frepo
