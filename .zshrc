@@ -94,3 +94,6 @@ bindkey '^r' fzf-history-selection
 
 zle -N frepo
 bindkey '^]' frepo
+
+# zsh起動時にtmux起動
+[[ -z "$TMUX" && ! -z "$PS1" ]] && exec tmux
