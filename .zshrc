@@ -1,3 +1,26 @@
+# 履歴ファイルの保存先
+export HISTFILE=${HOME}/.zsh_history
+
+# メモリに保存される履歴の件数
+export HISTSIZE=10000
+
+# 履歴ファイルに保存される履歴の件数
+export SAVEHIST=100000
+
+# 重複を記録しない
+setopt hist_ignore_all_dups
+setopt hist_no_store          # historyコマンドは履歴に登録しない
+setopt hist_verify            # ヒストリを呼び出してから実行する間に一旦編集可能
+# 開始と終了を記録
+setopt EXTENDED_HISTORY
+
+setopt extended_glob
+setopt auto_cd
+
+bindkey -v
+
+autoload -U compinit; compinit -C
+
 source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # theme (https://github.com/sindresorhus/pure#zplug)　好みのスキーマをいれてくだされ。
@@ -22,29 +45,6 @@ if ! zplug check --verbose; then
 fi
 # Then, source plugins and add commands to $PATH
 zplug load
-
-# 履歴ファイルの保存先
-export HISTFILE=${HOME}/.zsh_history
-
-# メモリに保存される履歴の件数
-export HISTSIZE=10000
-
-# 履歴ファイルに保存される履歴の件数
-export SAVEHIST=100000
-
-# 重複を記録しない
-setopt hist_ignore_all_dups
-setopt hist_no_store          # historyコマンドは履歴に登録しない
-setopt hist_verify            # ヒストリを呼び出してから実行する間に一旦編集可能
-# 開始と終了を記録
-setopt EXTENDED_HISTORY
-
-setopt extended_glob
-setopt auto_cd
-
-bindkey -v
-
-autoload -U compinit; compinit -C
 
 autoload -Uz zmv
 alias zmv='noglob zmv -W'
