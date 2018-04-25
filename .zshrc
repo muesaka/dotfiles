@@ -96,3 +96,4 @@ bindkey '^r' fzf-history-selection
 zle -N frepo
 bindkey '^]' frepo
 
+export XDG_CONFIG_HOME=$HOME/.config
