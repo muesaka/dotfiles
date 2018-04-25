@@ -1,0 +1,15 @@
+# dein本体
+    [[plugins]]
+    repo = 'Shougo/dein.vim'
+
+    [[plugins]]
+    repo = 'Shougo/vimproc.vim'
+    build = 'make'
+
+#vim-surround
+    [[plugins]]
+    repo = 'tpope/vim-surround'
+
+#vimfiler
+    [[plugins]]
+    repo = 'scrooloose/nerdtree'

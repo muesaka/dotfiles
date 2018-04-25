@@ -52,12 +52,16 @@ setopt auto_cd
 eval "$(fasd --init auto)"
 
 export GOPATH=$HOME
-path=(/usr/local/go/bin(N-/) /usr/local/bin(N-/) $path)
+export PYENV_ROOT=$HOME/.pyenv
+
+path=($HOME/.pyenv(N-/)
+      $HOME/.pyenv/bin(N-/)
+      /usr/local/go/bin(N-/)
+      /usr/local/bin(N-/)
+      $path)
 
 if type pyenv >/dev/null 2>&1
 then
-    export PYENV_ROOT=$HOME/.pyenv
-    export PATH=$PYENV_ROOT/bin:$PATH
     eval "$(pyenv init -)"
 fi
 

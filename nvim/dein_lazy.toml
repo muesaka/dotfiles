@@ -1,0 +1,52 @@
+# deinの遅延読み込みの際の条件指定
+# on_ft     ファイルタイプがマッチしたとき。String or List
+# on_path   パスが一致した時
+# on_func   呼び出し機能が一致した時
+# on_source プラグインがロードされたとき
+# on_cmd    コマンドが一致した時
+# on_map    キーが一致した時
+# on_i      on_event が奨励
+# on_event  eventが発生したら
+#           http://vim-jp.org/vimdoc-ja/autocmd.html#autocmd-events
+
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_path = '.*'
+on_event = 'BufEnter' 
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+on_event = 'InsertEnter'
+hook_source = '''
+    let g:deoplete#enable_at_startup =1
+    inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+        \ neosnippet#expandable_or_jumpable() ?
+        \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+'''
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/neosnippet'
+hook_source = '''
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+  let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/'
+'''
+on_i  = 1
+on_ft = ['snippet']
+depends = ['neosnippet-snippets']
+
+[[plugins]]
+repo = 'vim-scripts/autodate.vim'
+on_event = ['BufWritePre']
+hook_add = '''
+    let g:autodate_format = '%Y-%m-%d %H:%M:%S'
+'''
+
+
