@@ -240,3 +240,4 @@ set printoptions=number:y,header:2,syntax:y,left:5pt,right:5,top:10pt,bottom:10p
 set printfont=MyricaM_M:h12
 set printmbfont=r:MyricaM_M:h12,a:yes
 
+let g:autosave = 1

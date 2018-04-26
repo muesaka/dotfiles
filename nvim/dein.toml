@@ -10,6 +10,18 @@
     [[plugins]]
     repo = 'tpope/vim-surround'
 
-#vimfiler
+#NERDtree
     [[plugins]]
     repo = 'scrooloose/nerdtree'
+
+#neosnippet-snippets
+    [[plugins]]
+    repo = 'Shougo/neosnippet-snippets'
+
+#autosave
+    [[plugins]]
+    repo = 'vim-scripts/vim-auto-save'
+
+#lexima
+    [[plugins]]
+    repo = 'cohama/lexima.vim'
