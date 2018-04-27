@@ -2,6 +2,10 @@
 " init.vim 
 " --------------------------------------------
 let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+
+augroup MyAutoCmd
+  autocmd!
+augroup END
 " --------------------------------------------
 "  Setting for dein 
 " --------------------------------------------
@@ -107,7 +111,6 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
 syntax enable                                       "シンタックスハイライト
-
 set iminsert=0
 set imsearch=0
 set list                                        "不可視文字を表示
@@ -115,7 +118,6 @@ set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 
 
 if has('kaoriya')
-highlight CursorIM guibg=Purple guifg=NONE
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 set iminsert=0 imsearch=2
 endif
@@ -128,11 +130,11 @@ set scrolloff=2                                 "スクロールするとき下�
 set laststatus=2                                "エディタウィンドウに２行目にステータスラインを常時表示
 set showtabline=2
 " Tab
-set tabstop=4                                   "タブは4スペース
-set shiftwidth=4                                "自動インデントのスペース指定
+set tabstop=2                                   "タブは4スペース
+set shiftwidth=2                                "自動インデントのスペース指定
 set smarttab                                    "新しい行を作った時高度なインデントを行う
 set expandtab                                   "タブのかわりに空白を使う
-set softtabstop=4
+set softtabstop=2
 set autoindent                                  "新しい行のインデントを現在行と同じにする
 
 " Edit
@@ -171,8 +173,6 @@ set wildignore=*.o,*.obj,*.pyc,*.so
 let g:python_highlight_all=1
 set tw=0                                        "自動改行オフ
 set whichwrap=b,s,h,l,<,>,[,]                    "カーソル行を行頭、行末で止まらないように
-set cursorline                                  "カーソル行をハイライト
-set clipboard=unnamed                           "クリップボードをWindowsと連携する
 set hidden                                      "変更中のでも保存せずで他のファイルを表示
 set number                                      "行番号を表示する
 set switchbuf=useopen                           "新しく開く代りイに既に開いているバッファを

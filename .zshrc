@@ -51,6 +51,9 @@ alias zmv='noglob zmv -W'
 setopt auto_cd
 eval "$(fasd --init auto)"
 
+alias pgrep='pgrep -f'
+alias pkill='pkill -f'
+
 export GOPATH=$HOME
 export PYENV_ROOT=$HOME/.pyenv
 
@@ -74,6 +77,12 @@ if [ ! -f "$ENHANCD_DIR/enhancd.log" ]; then
   touch "$ENHANCD_DIR/enhancd.log"
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+function share_history {
+  history -a
+  history -c
+  history -r
+}
 
 function fzf-history-selection() {
   local tac
@@ -99,5 +108,7 @@ bindkey '^r' fzf-history-selection
 
 zle -N frepo
 bindkey '^]' frepo
+
+PROMPT_COMMAND='share_history'
 
 export XDG_CONFIG_HOME=$HOME/.config

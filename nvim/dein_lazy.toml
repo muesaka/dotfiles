@@ -49,4 +49,10 @@ hook_add = '''
     let g:autodate_format = '%Y-%m-%d %H:%M:%S'
 '''
 
+[[plugins]]
+repo = 'sjl/badwolf'
+hook_add = '''
+  set background=dark
+  au MyAutoCmd VimEnter * nested colorscheme badwolf
+'''
 
