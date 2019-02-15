@@ -1,0 +1,52 @@
+snippet     function
+abbr        func
+options     head
+  function ${1}(${2})
+    ${3}
+  end
+
+snippet     if
+abbr        if
+options     head
+  if ${1}
+    ${2}
+  end
+
+snippet     ifelse
+abbr        if-else
+options     head
+  if ${1}
+    ${2}
+  else
+    ${3}
+  end
+
+snippet     ifelif
+abbr        if-elseif-else
+options     head
+  if ${1}
+    ${2}
+  elseif ${3}
+    ${4}
+  else
+    ${5}
+  end
+
+snippet     forin
+abbr        for-in
+options     head
+  for ${1} in ${2}
+    ${3}
+  end
+
+snippet     printf
+abbr        @printf
+options     head
+  @printf "${1}", ${2}
+
+snippet     fwrite
+abbr        file-write
+options     head
+  open("${1}","${2:w}") do ${3:f}
+    ${4}
+  end

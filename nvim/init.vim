@@ -1,69 +1,67 @@
 " --------------------------------------------
 " init.vim 
 " --------------------------------------------
-let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim-3/bin/python'
+let g:python_host_prog = $PYENV_ROOT . '/versions/neovim-2/bin/python'
 
 augroup MyAutoCmd
   autocmd!
 augroup END
-" --------------------------------------------
-"  Setting for dein 
-" --------------------------------------------
 
-function! s:InitDein()
-    " Prepare .config/nvim
-    let s:config_dir = $XDG_CONFIG_HOME . "/nvim"
- 
-    " Prepare .nvim dir
-    let s:vimdir = $HOME . "/.nvim"
-    if has("vim_starting")
-        if ! isdirectory(s:vimdir)
-            call system("mkdir " . s:vimdir)
-        endif
-    endif
+if &compatible
+  set nocompatible
+endif
 
-    " dein
+set runtimepath+=~/.nvim/dein/repos/github.com/Shougo/dein.vim
 
-    " Set dein paths
-    let s:dein_dir = s:vimdir . '/dein'
-    let s:dein_github = s:dein_dir . '/repos/github.com'
-    let s:dein_repo_name = "Shougo/dein.vim"
-    let s:dein_repo_dir = s:dein_github . '/' . s:dein_repo_name
 
-    " Check dein has been installed or not
-    if !isdirectory(s:dein_repo_dir)
-        echo "dein is not installed, install now "
-        let s:dein_repo = "https://github.com/" . s:dein_repo_name
-        echo "git clone " . s:dein_repo . " " . s:dein_repo_dir
-        call system("git clone " . s:dein_repo . " " . s:dein_repo_dir)
-    endif
-    let &runtimepath = &runtimepath . ',' . s:dein_repo_dir
+" dein.vimインストール時に指定したディレクトリをセット
+let s:dein_dir = expand('~/.nvim/dein')
 
-    "Begin plugin part {{{
+" dein.vimの実体があるディレクトリをセット
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-    "Check cache
-    if dein#load_state(s:dein_dir)
-        call dein#begin(s:dein_dir)
+" dein.vimが存在していない場合はgithubからclone
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . s:dein_repo_dir
+endif
 
-        " 管理するプラグインを記述したファイル
-        let s:toml = s:config_dir .  '/dein.toml'
-        let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
-        call dein#load_toml(s:toml, {'lazy': 0})
-        call dein#load_toml(s:lazy_toml, {'lazy': 1})
-        :
-        call dein#end()
-        call dein#save_state()
-    endif " dein#load
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
 
-    if dein#check_install()
-        call dein#install()
-    endif
+  " dein.toml, dein_layz.tomlファイルのディレクトリをセット
+  let s:toml_dir = expand('~/.config/nvim')
 
-    filetype indent plugin on
-    syntax on
-endfunction
+  " 起動時に読み込むプラグイン群
+  call dein#load_toml(s:toml_dir . '/dein.toml', {'lazy': 0})
 
-call s:InitDein()
+  " 遅延読み込みしたいプラグイン群
+  call dein#load_toml(s:toml_dir . '/dein_lazy.toml', {'lazy': 1})
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+" 引数なしでvimを開くとNERDTreeを起動
+let file_name = expand('%')
+if has('vim_starting') &&  file_name == ''
+  autocmd VimEnter * NERDTree ./
+endif
+
+filetype indent plugin on
+syntax on
+
 
 " --------------------------------------------
 "  Bacis Setting for Vim 
@@ -91,7 +89,7 @@ set directory=$HOME/.vim-backup                 "スワップ用のディレク�
 "  ---------------
 "  基本的な設定 
 "  ---------------
-let mapleader = ","
+let mapleader = "\<space>"
 let maplocalleader = "."
 " Common Option
 if !&compatible
@@ -240,4 +238,14 @@ set printoptions=number:y,header:2,syntax:y,left:5pt,right:5,top:10pt,bottom:10p
 set printfont=MyricaM_M:h12
 set printmbfont=r:MyricaM_M:h12,a:yes
 
-let g:autosave = 1
+let g:auto_save = 1
+
+au BufRead,BufNewFile *.plt setfiletype gnuplot"
+
+let g:quickrun_config={}
+let g:quickrun_config['gnuplot']={
+  \ 'type' : 'gnuplot',
+  \ 'command' : 'gnuplot', 
+  \ 'exec' : 'cd %s:h; %c %s',
+  \ }
+
